@@ -17,5 +17,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@8.8.0"
 }
