@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM DEFENSE // V4.2 SCORING UPDATE</title>
+    <title>SYSTEM DEFENSE // V5.2 MUSIC & BALANCE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -14,7 +14,7 @@
             --term-red: #ff3333;
             --term-blue: #00f3ff;
             --term-gold: #ffd700;
-            --term-purple: #bd00ff; /* Couleur Cryptée */
+            --term-purple: #bd00ff;
             --ui-font: 'Share Tech Mono', monospace;
         }
 
@@ -38,17 +38,14 @@
             100% { background-color: var(--bg-color); }
         }
 
-        /* Effet CRT */
         .crt-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
                         radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.6) 100%);
             background-size: 100% 4px, 100% 100%;
             z-index: 10;
         }
 
-        /* Alert Overlay (Boss) */
         .alert-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: red; opacity: 0; pointer-events: none; z-index: 9;
@@ -57,17 +54,13 @@
         .boss-active .alert-overlay { animation: pulseAlert 1s infinite; }
         @keyframes pulseAlert { 0% { opacity: 0; } 50% { opacity: 0.3; } 100% { opacity: 0; } }
 
-        /* HUD */
         #ui-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
             display: flex; flex-direction: column; justify-content: space-between; z-index: 15;
             padding: 20px; box-sizing: border-box;
         }
 
-        .hud-top {
-            display: flex; justify-content: space-between; align-items: flex-start;
-            font-size: 1.5rem; text-shadow: 0 0 10px var(--term-glow);
-        }
+        .hud-top { display: flex; justify-content: space-between; align-items: flex-start; font-size: 1.5rem; text-shadow: 0 0 10px var(--term-glow); }
 
         .stat-block {
             display: flex; flex-direction: column; background: rgba(0,0,0,0.6);
@@ -83,11 +76,7 @@
         }
         .combo-active { opacity: 1; }
 
-        /* EMP BAR */
-        .emp-container {
-            width: 200px;
-            display: flex; flex-direction: column; align-items: flex-start; /* Aligné à gauche */
-        }
+        .emp-container { width: 200px; display: flex; flex-direction: column; align-items: flex-start; }
         .emp-bar-frame {
             width: 100%; height: 10px; border: 1px solid var(--term-blue); padding: 2px;
             background: rgba(0,0,0,0.5);
@@ -105,10 +94,7 @@
             text-shadow: 0 0 20px currentColor; z-index: 18; text-align: center; width: 100%;
         }
 
-        /* Bottom HUD Container */
-        .hud-bottom {
-            display: flex; justify-content: space-between; align-items: flex-end; width: 100%;
-        }
+        .hud-bottom { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
 
         .integrity-bar-container {
             width: 300px; height: 20px; border: 2px solid var(--term-green); padding: 2px;
@@ -119,7 +105,6 @@
             box-shadow: 0 0 10px var(--term-glow); transition: width 0.2s, background-color 0.2s;
         }
 
-        /* Menus */
         .screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -171,7 +156,6 @@
             100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
 
-        /* Canvas Layers */
         #matrixCanvas { position: absolute; top: 0; left: 0; z-index: 0; }
         #gameCanvas { position: absolute; top: 0; left: 0; z-index: 1; }
     </style>
@@ -187,13 +171,11 @@
 
         <!-- TOP HUD: Stats & Combo -->
         <div class="hud-top">
-            <!-- Left Stats -->
             <div class="stat-block">
                 <span class="label">SCORE</span>
                 <span class="value" id="score">0</span>
             </div>
             
-            <!-- Center Combo -->
             <div style="display:flex; flex-direction:column; align-items:center;">
                 <div class="combo-box" id="combo-display">
                     <span class="label">COMBO</span><br>
@@ -201,7 +183,6 @@
                 </div>
             </div>
 
-            <!-- Right Stats -->
             <div class="stat-block" style="text-align: right;">
                 <span class="label">WAVE</span>
                 <span class="value" id="level">1</span>
@@ -210,7 +191,6 @@
 
         <!-- BOTTOM HUD: EMP & Integrity -->
         <div class="hud-bottom">
-            <!-- EMP Bottom Left -->
             <div class="emp-container">
                 <div class="emp-label">EMP CHARGE (SPACE)</div>
                 <div class="emp-bar-frame">
@@ -218,7 +198,6 @@
                 </div>
             </div>
 
-            <!-- Integrity Bottom Right -->
             <div style="color: var(--term-red); text-shadow: 0 0 5px red; text-align: right;">
                 SYSTEM INTEGRITY
                 <div class="integrity-bar-container">
@@ -232,19 +211,19 @@
     <div id="start-screen" class="screen">
         <h1>SYSTEM DEFENSE</h1>
         <p>
-            V4.2 UPDATE<br>
-            Protégez le noyau contre l'intrusion massive.
+            V5.2 // AUDIO RESTORED<br>
+            EMP [ESPACE] // SCAN [TAB]
         </p>
 
         <div class="legend">
             <div class="legend-item"><span class="dot" style="background:var(--term-green)"></span> NORMAL</div>
             <div class="legend-item"><span class="dot" style="background:var(--term-blue)"></span> FREEZE</div>
-            <div class="legend-item"><span class="dot" style="background:var(--term-purple)"></span> CRYPTÉ (<span class="key-badge">TAB</span>)</div>
+            <div class="legend-item"><span class="dot" style="background:var(--term-purple)"></span> CRYPTÉ</div>
             <div class="legend-item"><span class="dot" style="background:var(--term-red)"></span> BOSS</div>
-            <div class="legend-item"><span class="dot" style="background:white"></span> EMP (<span class="key-badge">SPACE</span>)</div>
+            <div class="legend-item"><span class="dot" style="background:white"></span> EMP</div>
         </div>
 
-        <button onclick="initAudioAndStart()">INITIATE SEQUENCE</button>
+        <button id="start-btn">LANCER LE SYSTÈME</button>
     </div>
 
     <!-- Game Over Screen -->
@@ -275,13 +254,13 @@
         // --- AUDIO ENGINE ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let droneOsc, lfoOsc, droneGain;
-        let bossMusicInterval; // Pour le beat du boss
+        let bossMusicInterval;
         
         const Sounds = {
             type: () => playTone(800, 'square', 0.05, 0.05),
             lock: () => playTone(1200, 'sine', 0.1, 0.05),
             scan: () => { playTone(2000, 'sawtooth', 0.1, 0.1); playTone(1800, 'sawtooth', 0.1, 0.1, 0.1); },
-            emp: () => { playNoise(1.0); playTone(100, 'sawtooth', 1.0, 0.5); },
+            emp: () => { playNoise(1.5); playTone(100, 'sawtooth', 1.5, 0.5); },
             explosion: () => playNoise(0.2), 
             bossHit: () => { playTone(150, 'sawtooth', 0.1, 0.2); playNoise(0.1); },
             bossDie: () => { playTone(100, 'sawtooth', 1.0, 0.5); playNoise(1.0); },
@@ -291,7 +270,7 @@
             damage: () => playTone(100, 'sawtooth', 0.4, 0.3),
             start: () => { playTone(400, 'sine', 0.1, 0.1); setTimeout(() => playTone(1000, 'square', 0.4, 0.1), 200); },
             
-            // --- MUSIQUE D'AMBIANCE ---
+            // GAME AMBIENCE (DRONE)
             startDrone: () => {
                 if(droneOsc) return;
                 droneOsc = audioCtx.createOscillator();
@@ -319,37 +298,27 @@
                 if (droneOsc) { droneOsc.stop(); lfoOsc.stop(); droneOsc = null; }
             },
 
-            // --- MUSIQUE DE BOSS ---
+            // BOSS MUSIC
             startBossMusic: () => {
-                Sounds.stopDrone(); // Arrête l'ambiance calme
+                Sounds.stopDrone(); 
                 if (bossMusicInterval) return;
-                
                 let beatTick = 0;
                 bossMusicInterval = setInterval(() => {
-                    // Kick Drum (tous les temps)
                     if (beatTick % 4 === 0) playTone(60, 'square', 0.1, 0.3);
-                    
-                    // Hi-hat (contre-temps)
                     if (beatTick % 2 === 0) playNoise(0.05);
-
-                    // Bassline d'urgence
                     const note = (beatTick % 8 < 4) ? 100 : 110; 
                     playTone(note, 'sawtooth', 0.1, 0.15);
-
                     beatTick++;
-                }, 125); // ~120 BPM (vite)
+                }, 125); 
             },
             stopBossMusic: () => {
-                if (bossMusicInterval) {
-                    clearInterval(bossMusicInterval);
-                    bossMusicInterval = null;
-                }
-                Sounds.startDrone(); // Relance l'ambiance calme
+                if (bossMusicInterval) { clearInterval(bossMusicInterval); bossMusicInterval = null; }
+                Sounds.startDrone(); 
             }
         };
 
         function playTone(freq, type, duration, vol, delay=0) {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
+            if(audioCtx.state === 'suspended') return;
             setTimeout(() => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
@@ -365,7 +334,7 @@
         }
 
         function playNoise(duration) {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
+            if(audioCtx.state === 'suspended') return;
             const bufferSize = audioCtx.sampleRate * duration;
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = buffer.getChannelData(0);
@@ -438,23 +407,22 @@
         // --- GAME STATE ---
         let activeWords = [];
         let particles = [];
+        let shockwaves = []; 
         let score = 0;
         let combo = 0;
         let integrity = 100;
         let wave = 1;
-        let empCharge = 0; // 0 to 100
+        let empCharge = 0; 
         let gameRunning = false;
         let lastTime = 0;
         let spawnTimer = 0;
-        let spawnInterval = 2500; // AJUSTEMENT: 2000 -> 2500 (Plus lent au début)
-        let globalSpeedMultiplier = 0.8; // AJUSTEMENT: 1.0 -> 0.8 (Plus lent au début)
+        let spawnInterval = 2500; 
+        let globalSpeedMultiplier = 0.8; 
         let lockedWordIndex = -1;
         let freezeTimer = 0;
         let bossActive = false;
         let bossSpawnedInWave = false;
         let gameStartTime = 0;
-
-        // Stats tracking
         let stats = { hits: 0, misses: 0, keystrokes: 0 };
 
         // DOM Elements
@@ -468,6 +436,7 @@
         const bonusMsg = document.getElementById('bonus-msg');
         const startScreen = document.getElementById('start-screen');
         const gameOverScreen = document.getElementById('game-over-screen');
+        const startBtn = document.getElementById('start-btn');
         const body = document.body;
 
         class Word {
@@ -481,16 +450,10 @@
                 this.isEncrypted = false;
                 
                 const roll = Math.random();
-                if (roll > 0.96) {
-                    this.type = 'FREEZE'; this.color = '#00f3ff'; this.glow = '#00f3ff';
-                } else if (roll > 0.92) {
-                    this.type = 'HEAL'; this.color = '#ffd700'; this.glow = '#ffd700';
-                } else if (roll > 0.85) {
-                    this.type = 'CRYPT'; this.color = '#bd00ff'; this.glow = '#bd00ff';
-                    this.isEncrypted = true;
-                } else {
-                    this.type = 'NORMAL'; this.color = '#0f0'; this.glow = '#0f0';
-                }
+                if (roll > 0.96) { this.type = 'FREEZE'; this.color = '#00f3ff'; this.glow = '#00f3ff'; }
+                else if (roll > 0.92) { this.type = 'HEAL'; this.color = '#ffd700'; this.glow = '#ffd700'; }
+                else if (roll > 0.85) { this.type = 'CRYPT'; this.color = '#bd00ff'; this.glow = '#bd00ff'; this.isEncrypted = true; }
+                else { this.type = 'NORMAL'; this.color = '#0f0'; this.glow = '#0f0'; }
             }
 
             update(deltaTime) {
@@ -501,16 +464,12 @@
 
             draw(ctx, isLocked) {
                 ctx.font = 'bold 24px "Share Tech Mono", monospace';
-                
-                // Glow effect
                 if (isLocked) { ctx.shadowBlur = 15; ctx.shadowColor = this.glow; }
                 else if (this.type !== 'NORMAL') { ctx.shadowBlur = 8; ctx.shadowColor = this.glow; }
                 else { ctx.shadowBlur = 0; }
 
-                // Determine display text
                 let displayText = this.text;
                 if (this.isEncrypted && !isLocked) {
-                    // Random glitch characters if encrypted and not locked
                     if (Math.random() > 0.1) displayText = this.getGlitchText(this.text.length);
                 }
 
@@ -545,7 +504,7 @@
                 this.text = this.segments[0];
                 this.x = (width / 2) - 100;
                 this.y = -80;
-                this.speed = 0.15 * globalSpeedMultiplier; // Scale boss speed slightly
+                this.speed = 0.15 * globalSpeedMultiplier;
                 this.color = '#ff0000';
                 this.glow = '#ff0000';
                 this.isEncrypted = false;
@@ -599,15 +558,41 @@
             }
         }
 
+        class Shockwave {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.radius = 1;
+                this.maxRadius = width * 1.2;
+                this.life = 1.0;
+                this.speed = 40;
+            }
+            update() {
+                this.radius += this.speed;
+                this.life -= 0.02;
+            }
+            draw(ctx) {
+                if(this.life <= 0) return;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(0, 243, 255, ${this.life})`;
+                ctx.lineWidth = 10;
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+
         function spawnExplosion(x, y, color, count=20) {
             for(let i=0; i<count; i++) particles.push(new Particle(x, y, color));
         }
 
         function initAudioAndStart() {
             if(audioCtx.state === 'suspended') audioCtx.resume();
-            Sounds.start(); Sounds.startDrone();
+            Sounds.start();
+            Sounds.startDrone();
             startGame();
         }
+
+        startBtn.addEventListener('click', initAudioAndStart);
 
         function startGame() {
             startScreen.classList.add('hidden');
@@ -628,11 +613,11 @@
         }
 
         function resetVars() {
-            activeWords = []; particles = [];
+            activeWords = []; particles = []; shockwaves = [];
             score = 0; combo = 0; integrity = 100;
             wave = 1; empCharge = 0;
-            spawnInterval = 2500; // AJUSTEMENT: 2500 au lieu de 2000
-            globalSpeedMultiplier = 0.8; // AJUSTEMENT: 0.8 au lieu de 1
+            spawnInterval = 2500; 
+            globalSpeedMultiplier = 0.8; 
             lockedWordIndex = -1; freezeTimer = 0;
             bossActive = false; bossSpawnedInWave = false;
             stats = { hits: 0, misses: 0, keystrokes: 0 };
@@ -649,7 +634,6 @@
             const accuracy = stats.keystrokes > 0 ? Math.floor((stats.hits / stats.keystrokes) * 100) : 0;
             const apm = Math.floor(stats.keystrokes / (gameDurationMinutes || 1));
             
-            // Determine Rank
             let rank = "SCRIPT KIDDIE";
             if (score > 50) rank = "NOOB HACKER";
             if (score > 100) rank = "GREY HAT";
@@ -672,12 +656,10 @@
             levelEl.innerText = wave;
             integrityEl.style.width = integrity + "%";
             
-            // EMP Logic
             empBar.style.width = empCharge + "%";
             if (empCharge >= 100) empContainer.classList.add('emp-ready');
             else empContainer.classList.remove('emp-ready');
 
-            // Combo Logic
             if (combo > 1) {
                 comboDisplay.classList.add('combo-active');
                 comboVal.innerText = "x" + combo;
@@ -704,9 +686,8 @@
         function increaseDifficulty() {
             if (score > 0 && score % 10 === 0) {
                 wave++; bossSpawnedInWave = false;
-                // AJUSTEMENT: Progression plus douce (0.05 au lieu de 0.1)
                 globalSpeedMultiplier += 0.05; 
-                spawnInterval = Math.max(600, spawnInterval - 50); // -50ms au lieu de -100ms
+                spawnInterval = Math.max(600, spawnInterval - 50); 
             }
         }
 
@@ -716,38 +697,36 @@
             Sounds.emp();
             body.classList.add('emp-flash');
             setTimeout(() => body.classList.remove('emp-flash'), 500);
+            
+            // Spawn Shockwave
+            shockwaves.push(new Shockwave(width/2, height/2));
 
-            // Destroy all non-boss enemies
             for (let i = activeWords.length - 1; i >= 0; i--) {
                 const word = activeWords[i];
                 if (!word.isBoss) {
                     spawnExplosion(word.x+50, word.y, '#fff', 10);
-                    score += word.text.length; // Modified scoring
+                    score += word.text.length; 
                     activeWords.splice(i, 1);
                 } else {
-                    // Damage boss
                     if (word.advanceSegment()) {
                         spawnExplosion(word.x+100, word.y, '#f00', 10);
                         score += 10;
                     } else {
-                        // Boss killed by EMP
                         spawnExplosion(word.x+100, word.y, '#f00', 50);
                         bossActive = false; body.classList.remove('boss-active');
-                        Sounds.stopBossMusic(); // STOP MUSIC
+                        Sounds.stopBossMusic(); 
                         activeWords.splice(i, 1);
                         score += 50;
                     }
                 }
             }
-            lockedWordIndex = -1; // Reset lock
+            lockedWordIndex = -1; 
             updateHUD();
         }
 
         function scanClosestEncrypted() {
-            // Find closest encrypted word
             let closest = -1;
             let maxY = -Infinity;
-
             for (let i = 0; i < activeWords.length; i++) {
                 if (activeWords[i].isEncrypted) {
                     if (activeWords[i].y > maxY) {
@@ -756,7 +735,6 @@
                     }
                 }
             }
-
             if (closest !== -1) {
                 activeWords[closest].isEncrypted = false;
                 spawnExplosion(activeWords[closest].x + 50, activeWords[closest].y, '#bd00ff', 5);
@@ -769,6 +747,7 @@
 
         function gameLoop(timestamp) {
             if (!gameRunning) return;
+
             const deltaTime = timestamp - lastTime || 16;
             lastTime = timestamp;
 
@@ -780,13 +759,13 @@
                 if (freezeTimer <= 0) { freezeTimer = 0; body.classList.remove('frozen'); }
             } else {
                 spawnTimer += deltaTime;
-                if (wave % 5 === 0 && !bossSpawnedInWave && !bossActive) {
+                if (wave % 4 === 0 && !bossSpawnedInWave && !bossActive) {
                     bossActive = true; bossSpawnedInWave = true;
                     activeWords.push(new Boss());
                     body.classList.add('boss-active');
                     showBonusMessage("WARNING: FIREWALL DETECTED", "#ff0000");
                     Sounds.error();
-                    Sounds.startBossMusic(); // START MUSIC
+                    Sounds.startBossMusic(); 
                 } else if (spawnTimer > (bossActive ? spawnInterval * 2 : spawnInterval)) {
                     if (!bossActive || Math.random() > 0.5) activeWords.push(new Word());
                     spawnTimer = 0;
@@ -797,7 +776,6 @@
                 let word = activeWords[i];
                 word.update(deltaTime);
                 
-                // Collision
                 if (word.isBoss && word.y > height - 50) { integrity = 0; updateHUD(); gameOver(); return; }
                 if (word.y > height - 20) {
                     integrity -= 10; Sounds.damage(); breakCombo();
@@ -815,17 +793,22 @@
                 let p = particles[i]; p.update(); p.draw(ctx);
                 if (p.life <= 0) particles.splice(i, 1);
             }
+
+            for (let i = shockwaves.length - 1; i >= 0; i--) {
+                let s = shockwaves[i]; s.update(); s.draw(ctx);
+                if (s.life <= 0) shockwaves.splice(i, 1);
+            }
+
             requestAnimationFrame(gameLoop);
         }
 
         window.addEventListener('keydown', (e) => {
             if (!gameRunning) return;
             
-            // Special Keys
             if (e.code === 'Space') { activateEMP(); return; }
             if (e.code === 'Tab') { e.preventDefault(); scanClosestEncrypted(); return; }
 
-            if (e.key.length > 1) return; // Ignore modifiers
+            if (e.key.length > 1) return; 
 
             stats.keystrokes++;
             const key = e.key.toUpperCase();
@@ -834,10 +817,7 @@
                 const word = activeWords[lockedWordIndex];
                 if (!word) { lockedWordIndex = -1; return; }
                 
-                // Can't type if encrypted
-                if (word.isEncrypted) {
-                    Sounds.error(); breakCombo(); return;
-                }
+                if (word.isEncrypted) { Sounds.error(); breakCombo(); return; }
 
                 if (key === word.text[word.typedIndex]) {
                     word.typedIndex++;
@@ -845,7 +825,6 @@
                     Sounds.type();
                     
                     if (word.typedIndex === word.text.length) {
-                        // Word Destroyed
                         if (word.isBoss) {
                             Sounds.bossHit();
                             spawnExplosion(word.x + 100, word.y, '#f00', 10);
@@ -854,18 +833,17 @@
                                 Sounds.bossDie(); spawnExplosion(word.x + 100, word.y, '#f00', 50);
                                 showBonusMessage("FIREWALL BREACHED", "#0f0");
                                 score += 50; bossActive = false; body.classList.remove('boss-active');
-                                Sounds.stopBossMusic(); // STOP MUSIC
+                                Sounds.stopBossMusic(); 
                                 activeWords.splice(lockedWordIndex, 1); lockedWordIndex = -1;
                             }
                         } else {
                             Sounds.explosion(); spawnExplosion(word.x + 50, word.y, word.color);
-                            // Bonuses
                             if (word.type === 'FREEZE') { freezeTimer = 3000; body.classList.add('frozen'); Sounds.freeze(); showBonusMessage("SYSTEM FREEZE", "#00f3ff"); }
                             else if (word.type === 'HEAL') { integrity = Math.min(100, integrity + 15); Sounds.heal(); showBonusMessage("REPAIR +15%", "#ffd700"); }
                             
-                            score += (word.text.length + Math.floor(combo / 5)); // Modified scoring
+                            score += (word.text.length + Math.floor(combo / 5));
                             combo++;
-                            empCharge = Math.min(100, empCharge + 5); // Charge EMP
+                            empCharge = Math.min(100, empCharge + 5); 
 
                             activeWords.splice(lockedWordIndex, 1);
                             lockedWordIndex = -1;
@@ -877,10 +855,8 @@
                     stats.misses++; Sounds.error(); breakCombo();
                 }
             } else {
-                // Find new target
                 let bestIdx = -1; let maxY = -Infinity;
                 for (let i = 0; i < activeWords.length; i++) {
-                    // Cannot lock onto encrypted words
                     if (!activeWords[i].isEncrypted && activeWords[i].text.startsWith(key)) {
                         if (activeWords[i].y > maxY) { maxY = activeWords[i].y; bestIdx = i; }
                     }
@@ -892,10 +868,9 @@
                     stats.hits++;
                     Sounds.lock();
                     if (activeWords[bestIdx].text.length === 1 && !activeWords[bestIdx].isBoss) {
-                        // Instant kill single letter
                         Sounds.explosion(); spawnExplosion(activeWords[bestIdx].x, activeWords[bestIdx].y, activeWords[bestIdx].color);
                         activeWords.splice(bestIdx, 1); lockedWordIndex = -1;
-                        score += 1; // Single letter is 1 point
+                        score += 1; 
                         combo++; empCharge = Math.min(100, empCharge + 5);
                         increaseDifficulty(); updateHUD();
                     }
