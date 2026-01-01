@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,6 +59,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y clamav
-          sudo freshclam
+      - name: Update ClamAV signatures
+        run: |
+          mkdir -p /tmp/clamav
+          cat <<'EOF' > /tmp/freshclam.conf
+          DatabaseDirectory /tmp/clamav
+          LogFile /tmp/freshclam.log
+          Foreground true
+          EOF
+          sudo freshclam --config-file=/tmp/freshclam.conf
       - name: Scan with ClamAV
-        run: clamscan -r --infected --no-summary --exclude-dir=.git .
+        run: clamscan -r --infected --no-summary --exclude-dir=.git --database=/tmp/clamav .
