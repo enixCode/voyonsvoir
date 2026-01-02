@@ -5,8 +5,8 @@ Voici un repo totalement vide : vous en faites ce que vous voulez, vous dev tout
 
 ## 🌐 Live Demo
 
-The application is automatically deployed to GitHub Pages on every push to the main branch:
-**[https://vachmara.github.io/voyonsvoir/](https://vachmara.github.io/voyonsvoir/)**
+Contributors 3D est deploye automatiquement sur GitHub Pages:
+**[https://anisayari.github.io/voyonsvoir/](https://anisayari.github.io/voyonsvoir/)**
 
 ---
 
@@ -87,6 +87,28 @@ Pour comparaison :
 2. **Ajoute** ce que tu veux (code, texte, assets, n'importe quoi).
 3. **Ouvre une Pull Request**.
 4. Si pas de conflit → **C'est mergé !**
+
+---
+
+## Qu'est-ce que on build ici ?
+
+- **Contributors 3D** (contributors/)
+    - Visualisation 3D des contributeurs GitHub avec Three.js
+    - Avatars flottants style The Sims avec animations
+    - Taille proportionnelle au nombre de commits
+    - [Live Demo](https://anisayari.github.io/voyonsvoir/)
+
+- **ik-webgpu** (rust/)
+    - Inverse kinematics avec WebGPU (algorithme FABRIK)
+
+- **QR Code CLI** (qr_code_cli/)
+    - Générateur de QR codes en ligne de commande
+
+- **Landing Page** (src/app/)
+    - Page Next.js avec bouton "Surprise"
+
+- **GLOBErts** (GLOBErts/)
+    - Portfolio/Metaverse (à venir)
 
 ---
 
