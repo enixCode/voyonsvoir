@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/voyonsvoir/",
+  base: "/voyonsvoir/contributors-3d/",
   build: {
     outDir: "dist",
   },
