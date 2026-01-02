@@ -230,14 +230,9 @@ export default async function ContributorsPage() {
           </p>
         )}
 
-        <div className={styles.linksContainer}>
-          <a href="/contributors-3d/" className={styles.link3d}>
-            🎮 Vue 3D Interactive
-          </a>
-          <a href="/" className={styles.backLink}>
-            ← Retour à l&apos;accueil
-          </a>
-        </div>
+        <a href="/" className={styles.backLink}>
+          ← Retour à l&apos;accueil
+        </a>
       </main>
     </div>
   );

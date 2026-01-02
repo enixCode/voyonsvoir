@@ -106,9 +106,14 @@ export default function Home() {
         <div className={styles.logoSubtext}>REALITY DISTORTION EXPERIMENT</div>
       </div>
 
-      <a className={styles.contributorsLink} href="/contributors">
-        Contributeurs
-      </a>
+      <div className={styles.navLinks}>
+        <a className={styles.contributorsLink} href="/contributors">
+          Contributeurs
+        </a>
+        <a className={styles.contributors3dLink} href="/contributors-3d/">
+          🎮 Contributeurs 3D
+        </a>
+      </div>
 
       {activeEffect === "matrix" && (
         <div className={styles.matrixRain}>

@@ -71,11 +71,16 @@
   text-transform: uppercase;
 }
 
-.contributorsLink {
+.navLinks {
   position: fixed;
   top: 40px;
   right: 40px;
   z-index: 100;
+  display: flex;
+  gap: 1rem;
+}
+
+.contributorsLink {
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
@@ -94,6 +99,29 @@
 .contributorsLink:hover {
   background-color: rgba(0, 255, 0, 0.1);
   box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+  transform: translateY(-2px);
+  letter-spacing: 3px;
+}
+
+.contributors3dLink {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff6b6b;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 24px;
+  border: 2px solid #ff6b6b;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.6);
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+}
+
+.contributors3dLink:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.4);
   transform: translateY(-2px);
   letter-spacing: 3px;
 }
@@ -525,15 +553,22 @@
     font-size: 1.2rem;
   }
 
-  .contributorsLink {
+  .navLinks {
     top: 20px;
     right: 20px;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contributorsLink,
+  .contributors3dLink {
     font-size: 0.7rem;
     padding: 8px 16px;
     letter-spacing: 1.5px;
   }
 
-  .contributorsLink:hover {
+  .contributorsLink:hover,
+  .contributors3dLink:hover {
     letter-spacing: 2px;
   }
 
